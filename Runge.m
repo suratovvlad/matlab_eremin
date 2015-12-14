@@ -10,8 +10,8 @@ array_count = [];
 for i=3:0.5:6
     %tol
     tol = 10^(-i);
-    [array_x, array_y, count_calc_] = Heun_calc(tol, a, b, y);
-%     
+    [array_x, array_y, count_calc_] = Runge4_calc(tol, a, b, y);
+    
 %     figure;
 %     plot(array_x, array_y);
 %     hold on;
@@ -24,10 +24,3 @@ for i=3:0.5:6
     display(count_calc_);
     semilogx(array_i, array_count);
 end
-
-
-
-
-
-
-
