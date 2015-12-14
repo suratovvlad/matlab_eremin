@@ -5,22 +5,31 @@ a = 0;
 b = 10;
 y = [0; 1; 1];
 
-array_i = [];
-array_count = [];
-for i=3:0.5:6
-    %tol
-    tol = 10^(-i);
-    [array_x, array_y, count_calc_] = Runge4_calc(tol, a, b, y);
-    
-%     figure;
-%     plot(array_x, array_y);
-%     hold on;
-%     plot(array_x, array_y, '+');
-%     hold on;
-%     ode45(@JACB, [a:0.1:b], [0 1 1]);
+tol = 10^(-4);
+[array_x, array_y, count_calc_] = Runge4_calc(tol, a, b, y);
+figure;
+plot(array_x, array_y);
+hold on;
+plot(array_x, array_y, '+');
+hold on;
+ode45(@JACB, [a:0.1:b], [0 1 1]);
 
-    array_i = [array_i, i];
-    array_count = [array_count, count_calc_];
-    display(count_calc_);
-    semilogx(array_i, array_count);
-end
+% array_i = [];
+% array_count = [];
+% for i=3:0.5:6
+%     %tol
+%     tol = 10^(-i);
+%     [array_x, array_y, count_calc_] = Runge4_calc(tol, a, b, y);
+%     
+% %     figure;
+% %     plot(array_x, array_y);
+% %     hold on;
+% %     plot(array_x, array_y, '+');
+% %     hold on;
+% %     ode45(@JACB, [a:0.1:b], [0 1 1]);
+% 
+%     array_i = [array_i, i];
+%     array_count = [array_count, count_calc_];
+%     display(count_calc_);
+%     semilogx(array_i, array_count);
+% end

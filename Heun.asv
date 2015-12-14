@@ -6,7 +6,7 @@ b = 10;
 y = [0; 1; 1];
 
 tol = 10^(-4);
-[array_x, array_y, count_calc_] = Heun_calc(tol, a, b, y);
+[array_x, array_y, count_calc_] = _calc(tol, a, b, y);
 figure;
 plot(array_x, array_y);
 hold on;

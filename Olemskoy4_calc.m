@@ -25,7 +25,11 @@ array_y = [y];
 array_x = [x];
 
 
-while x <= b
+while x < b
+    
+    if (x+h>=b)
+        h = b - x;
+    end
     
     %recalculate steps for each case
     h_2step = h / 2;
@@ -71,7 +75,7 @@ while x <= b
 
         k_0_4_2step = h_2step * JACB_struct_zero(0, [y_2step(1) + k_0_1_2step - k_0_2_2step + k_0_3_2step, ...
                                                      y_2step(2) + 4/5 * k_i_1_2step - 1/3 * k_i_2_2step + 8/15 * k_i_3_2step, ...
-                                                     y_2step(2) + 1/3 * k_j_1_2step + 2/3 * k_j_2_2step ] );
+                                                     y_2step(3) + 1/3 * k_j_1_2step + 2/3 * k_j_2_2step ] );
 
         y_new_0_2step = y_2step(1) + 1/8 * (k_0_1_2step + 3 * k_0_2_2step + 3 * k_0_3_2step + k_0_4_2step);
         y_new_i_2step = y_2step(2) + 1/10 * (k_i_1_2step + 5 * k_i_2_2step + 4 * k_i_3_2step);
@@ -121,7 +125,7 @@ while x <= b
 %                                                  y_1step(2) + 1/6 * k_i_1_1step + 5/6 * k_i_2_1step, ...                                             
     k_0_4_1step = h_1step * JACB_struct_zero(0, [y_1step(1) + k_0_1_1step - k_0_2_1step + k_0_3_1step, ...
                                                  y_1step(2) + 4/5 * k_i_1_1step - 1/3 * k_i_2_1step + 8/15 * k_i_3_1step, ...
-                                                 y_1step(2) + 1/3 * k_j_1_1step + 2/3 * k_j_2_1step ] );
+                                                 y_1step(3) + 1/3 * k_j_1_1step + 2/3 * k_j_2_1step ] );
     
     y_new_0_1step = y_1step(1) + 1/8 * (k_0_1_1step + 3 * k_0_2_1step + 3 * k_0_3_1step + k_0_4_1step);
     y_new_i_1step = y_1step(2) + 1/10 * (k_i_1_1step + 5 * k_i_2_1step + 4 * k_i_3_1step);

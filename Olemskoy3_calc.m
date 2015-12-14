@@ -25,7 +25,11 @@ array_y = [y];
 array_x = [x];
 
 
-while x <= b
+while x < b
+    
+    if (x+h>=b)
+        h = b - x;
+    end
     
     %recalculate steps for each case
     h_2step = h / 2;
