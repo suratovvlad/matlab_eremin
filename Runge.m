@@ -5,7 +5,7 @@ a = 0;
 b = 10;
 y = [0; 1; 1];
 
-tol = 10^(-4);
+tol = 10^(-7);
 [array_x, array_y, count_calc_] = Runge4_calc(tol, a, b, y);
 figure;
 plot(array_x, array_y);
