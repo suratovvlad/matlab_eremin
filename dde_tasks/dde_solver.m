@@ -1,90 +1,123 @@
-function [ T_ARRAY, Y_ARRAY ] = dde_solver( a_matrix, b_vector, c_vector, order, stage_count, ...
- DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, time_start, time_end, steps_k )
-% a_matrix  -   п°п░п╒п═п≤п╕п░ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ a п°п∙п╒п·п■п░
-% b_vector  -   п▓п∙п п╒п·п═ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ b п°п∙п╒п·п■п░
-% c_vector  -   п▓п∙п п╒п·п═ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ c п°п∙п╒п·п■п░
-% order     -   п÷п·п═п╞п■п·п  п°п∙п╒п·п■п░
-% stage_count   -   п п·п⌡п≤п╖п∙п║п╒п▓п· п╜п╒п░п÷п·п▓ п▓ п°п∙п╒п·п■п∙
-% DDE_FUN       -   п■п≤п╓п╓п∙п═п∙п²п╕п≤п░п⌡п╛п²п·п∙ пёп═п░п▓п²п∙п²п≤п∙ п║ п≈п░п÷п░п≈п■п╚п▓п░п╝п╘п≤п° п░п═п⌠пёп°п∙п²п╒п·п°
-% HISTORY_FUN   -   п╓пёп²п п╕п≤п╞ п≤п║п╒п·п═п≤п≤
-% DELAY_TIME_FUN    -   п╓пёп²п п╕п≤п╞ п≈п░п÷п░п≈п■п╚п▓п░п²п≤п╞
-% ANALYTICAL_SOLUTION   -   п░п²п░п⌡п≤п╒п≤п╖п∙п║п п·п∙ п═п∙п╗п∙п²п≤п∙
-% time_start    -   п²п░п╖п░п⌡п· п≤п║п║п⌡п∙п■пёп∙п°п·п⌠п· п≤п²п╒п∙п═п▓п░п⌡п░
-% time_end      -   п п·п²п∙п╕ п≤п║п║п⌡п∙п■пёп∙п°п·п⌠п· п≤п²п╒п∙п═п▓п░п⌡п░
-% steps_k       -   п°п²п·п√п≤п╒п∙п⌡п╛ п■п⌡п╞ п╗п░п⌠п·п▓
+function [ T_ARRAY, Y_ARRAY, K_MATRIX, GLOBAL_ERROR ] = dde_solver( a_matrix, b_vector, c_vector, order, stage_count, ...
+ DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, time_start, time_end, steps_k, step_count, STEP )
+% a_matrix  -   люрпхжю йнщттхжхемрнб a лерндю
+% b_vector  -   бейрнп йнщттхжхемрнб b лерндю
+% c_vector  -   бейрнп йнщттхжхемрнб c лерндю
+% order     -   онпъднй лерндю
+% stage_count   -   йнкхвеярбн щрюонб б лернде
+% DDE_FUN       -   дхттепемжхюкэмне спюбмемхе я гюоюгдшбючыхл юпцслемрнл
+% HISTORY_FUN   -   тсмйжхъ хярнпхх
+% DELAY_TIME_FUN    -   тсмйжхъ гюоюгдшбюмхъ
+% ANALYTICAL_SOLUTION   -   юмюкхрхвеяйне пеьемхе
+% time_start    -   мювюкн хяякедселнцн хмрепбюкю
+% time_end      -   йнмеж хяякедселнцн хмрепбюкю
+% steps_k       -   лмнфхрекэ дкъ ьюцнб
+% step_count    -	йнкхвеярбн ьюцнб
+% STEP          -   дкхмю ьюцю
 
-% T_ARRAY   -   п▓п∙п п╒п·п═ п≈п²п░п╖п∙п²п≤п≥ п▓п═п∙п°п∙п²п≤ п²п░ п п░п√п■п·п° п╗п░п⌠п∙
-% Y_ARRAY   -   п▓п∙п п╒п·п═ п≈п²п░п╖п∙п²п≤п≥ п≤п║п п·п°п·п≥ п╓пёп²п п╕п≤п≤ п²п░ п п░п√п■п·п° п╗п░п⌠п∙
+% T_ARRAY   -   бейрнп гмювемхи бпелемх мю йюфднл ьюце
+% Y_ARRAY   -   бейрнп гмювемхи хяйнлни тсмйжхх мю йюфднл ьюце
 
-
-% п п·п⌡п≤п╖п∙п║п╒п▓п· п╗п░п⌠п·п▓
-step_count = 2^steps_k;    
-% п■п⌡п≤п²п░ п╗п░п⌠п░
-STEP = (time_end - time_start) / step_count; 
-
-% п▓п∙п п╒п·п═ п≈п²п░п╖п∙п²п≤п≥ п▓п═п∙п°п∙п²п≤ п²п░ п п░п√п■п·п° п╗п░п⌠п∙
+% бейрнп гмювемхи бпелемх мю йюфднл ьюце
 T_ARRAY = zeros(step_count + 1, 1);
-% п▓п∙п п╒п·п═ п≈п²п░п╖п∙п²п≤п≥ п≤п║п п·п°п·п≥ п╓пёп²п п╕п≤п≤ п²п░ п п░п√п■п·п° п╗п░п⌠п∙
+% бейрнп гмювемхи хяйнлни тсмйжхх мю йюфднл ьюце
 Y_ARRAY = zeros(step_count + 1, 1);
-% п°п░п╒п═п≤п╕п░ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ п■п⌡п╞ п п░п√п■п·п⌠п· п╜п╒п░п÷п░ п²п░ п п░п√п■п·п° п╗п░п⌠п∙
-K_MATRIX = zeros(step_count + 1, stage_count); 
+% люрпхжю йнщттхжхемрнб дкъ йюфднцн щрюою мю йюфднл ьюце
+K_MATRIX = zeros(step_count + 1, stage_count);
+% люрпхжю цкнаюкэмшу онцпеьмняреи
+GLOBAL_ERROR_MATRIX = [];
 
-% п²п░п╖п░п⌡п╛п²п╚п∙ п≈п²п░п╖п∙п²п≤п╞ п▓п═п∙п°п∙п²п≤ п≤ п╓пёп²п п╕п≤п≤ п▓ п╜п╒п·п° п▓п═п∙п°п∙п²п≤
+% мювюкэмше гмювемхъ бпелемх х тсмйжхх б щрнл бпелемх
 T_ARRAY(1) = time_start;
 Y_ARRAY(1) = HISTORY_FUN(time_start);
 
-step_index = 2;     % п²п·п°п∙п═ п╗п░п⌠п░
-time_current = time_start;  % п╒п∙п пёп╘п∙п∙ п▓п═п∙п°п╞
+step_index = 2;     % мнлеп ьюцю
+time_current = time_start;  % рейсыее бпелъ
 
 while time_current < time_end
     
-    % п≈п░п÷п·п°п≤п²п░п∙п° п≈п²п░п╖п∙п²п≤п∙ п╓пёп²п п╕п≤п≤ п²п░ п÷п═п·п╗п⌡п·п° п╗п░п⌠п∙
+    % гюонлхмюел гмювемхе тсмйжхх мю опнькнл ьюце
     y_value = Y_ARRAY(step_index - 1);
     
-    for stage_index = 1:stage_count % п²п·п°п∙п═ п╜п╒п░п÷п░
+    for stage_index = 1:stage_count % мнлеп щрюою
         
-        % п≈п²п░п╖п∙п²п≤п∙ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ c п≤п≈ п▓п∙п п╒п·п═п░ п■п⌡п╞ п╒п∙п пёп╘п∙п⌠п· п°п∙п╒п·п■п░
+        % гмювемхе йнщттхжхемрнб c хг бейрнпю дкъ рейсыецн лерндю
         c_value = c_vector(stage_index);
         
-        % п▓п╚п╖п≤п║п⌡п╞п∙п° п²п·п▓п·п∙ п▓п═п∙п°п╞ п■п⌡п╞ п╜п╒п░п÷п░
+        % бшвхякъел мнбне бпелъ дкъ щрюою
         new_time_for_stage = time_current + c_value * STEP;       
         
-        % п║пёп°п°п░, п²п░ п п·п╒п·п═пёп╝ пёп▓п∙п⌡п≤п╖п≤п▓п░п∙п° п≈п²п░п╖п∙п²п≤п∙ п╓пёп²п п╕п≤п≤  
+        % ясллю, мю йнрнпсч сбекхвхбюел гмювемхе тсмйжхх  
         sum_for_stage = 0;
-        for prev_stage = 1: (stage_index - 1) % п÷п═п·п▒п∙п⌠п░п∙п° п÷п· п▓п║п∙п° п÷п═п∙п■п╚п■пёп╘п∙п° п╜п╒п░п÷п░п° п╜п╒п·п⌠п· п╗п░п⌠п░
+        for prev_stage = 1: (stage_index - 1) % опнаецюел он бяел опедшдсыел щрюоюл щрнцн ьюцю
             
-            % п≈п²п░п╖п∙п²п≤п∙ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ a п≤п≈ п°п░п╒п═п≤п╕п╚ п■п⌡п╞ п╒п∙п пёп╘п∙п⌠п· п°п∙п╒п·п■п░
+            % гмювемхе йнщттхжхемрнб a хг люрпхжш дкъ рейсыецн лерндю
             a_value = a_matrix(stage_index, prev_stage);
             
-            % п²п∙п·п▒п╔п·п■п≤п°п·п∙ п≈п²п░п╖п∙п²п≤п∙ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п░ k
+            % менаундхлне гмювемхе йнщттхжхемрю k
             k_value =  K_MATRIX(step_index, prev_stage);
             
-            % пёп▓п∙п⌡п≤п╖п≤п▓п░п∙п° п║пёп°п°пё
+            % сбекхвхбюел ясллс
             sum_for_stage = sum_for_stage + a_value * k_value;
         end
         
-        % п▓п╚п╖п≤п║п⌡п╞п∙п° п²п·п▓п·п∙ п≈п²п░п╖п∙п²п≤п∙ п╓пёп²п п╕п≤п≤ п■п⌡п╞ п╜п╒п░п÷п░
+        % бшвхякъел мнбне гмювемхе тсмйжхх дкъ щрюою
         new_y_for_stage = y_value + STEP * sum_for_stage;
 
-        % п▓п╚п╖п≤п║п⌡п╞п∙п° п╜п╒п╒п░-п╓пёп²п п╕п≤п╝ п÷п· п▓п╚п╖п≤п║п⌡п∙п²п²п╚п° п≈п²п░п╖п∙п²п≤п╞п° п■п· п╜п╒п·п⌠п· п╜п╒п░п÷п░
+        % бшвхякъел щррю-тсмйжхч он бшвхякеммшл гмювемхъл дн щрнцн щрюою
         etta_for_stage = etta_func(new_time_for_stage, new_y_for_stage, T_ARRAY, stage_count, step_index, STEP, K_MATRIX, Y_ARRAY, b_vector, HISTORY_FUN, DELAY_TIME_FUN);
         
-        % п▓п╚п╖п≤п║п⌡п╞п∙п° п²п·п▓п╚п≥ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒ п²п░ п╜п╒п·п° п╜п╒п░п÷п∙
+        % бшвхякъел мнбши йнщттхжхемр мю щрнл щрюое
         new_k_stage = DDE_FUN(new_time_for_stage, new_y_for_stage, etta_for_stage);
         K_MATRIX(step_index, stage_index) = new_k_stage;
     end
 
-    % п▓п╚п╖п≤п║п⌡п╞п∙п° п≈п²п░п╖п∙п²п≤п∙ п╓пёп²п п╕п≤п≤ п²п░ п■п░п²п²п·п° п╗п░п⌠п∙
+    % бшвхякъел гмювемхе тсмйжхх мю дюммнл ьюце
     new_y = delaying_func(1, step_index, STEP, stage_count, K_MATRIX, Y_ARRAY, b_vector);
     Y_ARRAY(step_index) = new_y;
     
-    % пёп▓п∙п⌡п≤п╖п≤п▓п░п∙п° п▓п═п∙п°п╞ п²п░ п■п⌡п≤п²пё п╗п░п⌠п░
+    % сбекхвхбюел бпелъ мю дкхмс ьюцю
     time_current = time_current + STEP;
     T_ARRAY(step_index) = time_current;
     
-    % пёп▓п∙п⌡п≤п╖п≤п▓п░п∙п° п╒п∙п пёп╘п≤п≥ п║п╖п∙п╒п╖п≤п  п╗п░п⌠п░
+    time_left = T_ARRAY(step_index - 1);
+    time_right = T_ARRAY(step_index);    
+    
+    timer_step = (time_right - time_left) / 100;
+    timer = time_left;
+    while timer < time_right
+        
+        numerical_answer = delaying_func(timer, step_index, STEP, stage_count, K_MATRIX, Y_ARRAY, b_vector);
+        analitycal_answer = ANALYTICAL_SOLUTION(timer);
+        
+        global_error = abs(numerical_answer - analitycal_answer);
+        
+        GLOBAL_ERROR_MATRIX = [GLOBAL_ERROR_MATRIX; global_error];
+        
+        timer = timer + timer_step;
+    end
+    
+    % сбекхвхбюел рейсыхи явервхй ьюцю
     step_index = step_index + 1;
 end
 
+GLOBAL_ERROR = max(GLOBAL_ERROR_MATRIX);
+
+figure;
+
+hold on;
+% plot(T_ARRAY, Y_ARRAY, '+');
+% hold on;
+
+x = time_start:0.01:time_end;
+y = ANALYTICAL_SOLUTION(x);
+
+
+plot(T_ARRAY, Y_ARRAY, x, y);
+
+title(['Graph of Numerical and Analitycal Solutions with step = '  num2str(STEP)]);
+xlabel('time') % x-axis label
+ylabel('function values') % y-axis label
+legend('y = Numerical','y = Analitycal','Location','southwest');
 end
 

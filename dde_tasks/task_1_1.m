@@ -1,50 +1,17 @@
 clear;
 
-order = 5;          % –ü–û–†–Ø–î–û–ö –ú–ï–¢–û–î–ê
-stage_count = 8;    % –ö–û–õ–ò–ß–ï–°–¢–í–û –≠–¢–ê–ü–û–í –í –ú–ï–¢–û–î–ï
-
-% –ú–ê–¢–†–ò–¶–ê –ö–û–≠–§–§–ò–¶–ò–ï–ù–¢–û–í a –ú–ï–¢–û–î–ê
-a_matrix = @MATRIX_A_OF_CERK5_METHOD;
-% –í–ï–ö–¢–û–† –ö–û–≠–§–§–ò–¶–ò–ï–ù–¢–û–í b –ú–ï–¢–û–î–ê
-b_vector = @VECTOR_B_OF_CERK5_METHOD;
-% –í–ï–ö–¢–û–† –ö–û–≠–§–§–ò–¶–ò–ï–ù–¢–û–í c –ú–ï–¢–û–î–ê
-c_vector = @VECTOR_C_OF_CERK5_METHOD;
-
-% –î–ò–§–§–ï–†–ï–ù–¶–ò–ê–õ–¨–ù–û–ï –£–†–ê–í–ù–ï–ù–ò–ï –° –ó–ê–ü–ê–ó–î–´–í–ê–Æ–©–ò–ú –ê–†–ì–£–ú–ï–ù–¢–û–ú
+% ƒ»‘‘≈–≈Õ÷»¿À‹ÕŒ≈ ”–¿¬Õ≈Õ»≈ — «¿œ¿«ƒ€¬¿ﬁŸ»Ã ¿–√”Ã≈Õ“ŒÃ
 DDE_FUN = @paul127_function;
-% DDE_FUN = @equation_one_dde;
-
-% –§–£–ù–ö–¶–ò–Ø –ò–°–¢–û–†–ò–ò
+% ‘”Õ ÷»ﬂ »—“Œ–»»
 HISTORY_FUN = @history_func;
-% HISTORY_FUN = @equation_one_history;
-
-% –§–£–ù–ö–¶–ò–Ø –ó–ê–ü–ê–ó–î–´–í–ê–ù–ò–Ø
+% ‘”Õ ÷»ﬂ «¿œ¿«ƒ€¬¿Õ»ﬂ
 DELAY_TIME_FUN = @paul127_delay_time;
-% DELAY_TIME_FUN = @equation_one_delay;
-
-% –ê–ù–ê–õ–ò–¢–ò–ß–ï–°–ö–û–ï –†–ï–®–ï–ù–ò–ï
+% ¿Õ¿À»“»◊≈— Œ≈ –≈ÿ≈Õ»≈
 ANALYTICAL_SOLUTION = @log;
-% ANALYTICAL_SOLUTION = @equation_one_solution;
-        
-time_start = 2;     % –ù–ê–ß–ê–õ–û –ò–°–°–õ–ï–î–£–ï–ú–û–ì–û –ò–ù–¢–ï–†–í–ê–õ–ê
-time_end = 3;       % –ö–û–ù–ï–¶ –ò–°–°–õ–ï–î–£–ï–ú–û–ì–û –ò–ù–¢–ï–†–í–ê–õ–ê
-steps_k = 8;        % –ú–ù–û–ñ–ò–¢–ï–õ–¨ –î–õ–Ø –®–ê–ì–û–í
 
-[ T_ARRAY, Y_ARRAY ] = dde_solver(a_matrix, b_vector, c_vector, order, stage_count, ...
-    DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, time_start, time_end, steps_k);
+% Õ¿◊¿ÀŒ »——À≈ƒ”≈ÃŒ√Œ »Õ“≈–¬¿À¿
+time_start = 2;
+%  ŒÕ≈÷ »——À≈ƒ”≈ÃŒ√Œ »Õ“≈–¬¿À¿
+time_end = 3;
 
-% 
-% for step_index = 2:step_count
-%     
-%     time_left = T_ARRAY(step_index - 1);
-%     time_right = T_ARRAY(step_index);
-%     
-%     timer = time_left:0.01:time_right;
-%     
-%     
-%     
-% end
-
-
-figure
-plot(T_ARRAY, Y_ARRAY)
+task_1_common(DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, time_start, time_end);
