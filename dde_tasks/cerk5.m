@@ -1,34 +1,34 @@
 clear;
 
-order = 5;          % онпъднй лерндю
-stage_count = 8;    % йнкхвеярбн щрюонб б лернде
+order = 5;          % п÷п·п═п╞п■п·п  п°п∙п╒п·п■п░
+stage_count = 8;    % п п·п⌡п≤п╖п∙п║п╒п▓п· п╜п╒п░п÷п·п▓ п▓ п°п∙п╒п·п■п∙
 
-% люрпхжю йнщттхжхемрнб a лерндю
+% п°п░п╒п═п≤п╕п░ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ a п°п∙п╒п·п■п░
 a_matrix = @MATRIX_A_OF_CERK5_METHOD;
-% бейрнп йнщттхжхемрнб b лерндю
+% п▓п∙п п╒п·п═ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ b п°п∙п╒п·п■п░
 b_vector = @VECTOR_B_OF_CERK5_METHOD;
-% бейрнп йнщттхжхемрнб c лерндю
+% п▓п∙п п╒п·п═ п п·п╜п╓п╓п≤п╕п≤п∙п²п╒п·п▓ c п°п∙п╒п·п■п░
 c_vector = @VECTOR_C_OF_CERK5_METHOD;
 
-% дхттепемжхюкэмне спюбмемхе я гюоюгдшбючыхл юпцслемрнл
+% п■п≤п╓п╓п∙п═п∙п²п╕п≤п░п⌡п╛п²п·п∙ пёп═п░п▓п²п∙п²п≤п∙ п║ п≈п░п÷п░п≈п■п╚п▓п░п╝п╘п≤п° п░п═п⌠пёп°п∙п²п╒п·п°
 % DDE_FUN = @paul127_function;
 % DDE_FUN = @equation_one_dde;
 
-% тсмйжхъ хярнпхх
+% п╓пёп²п п╕п≤п╞ п≤п║п╒п·п═п≤п≤
 % HISTORY_FUN = @history_func;
 % HISTORY_FUN = @equation_one_history;
 
-% тсмйжхъ гюоюгдшбюмхъ
+% п╓пёп²п п╕п≤п╞ п≈п░п÷п░п≈п■п╚п▓п░п²п≤п╞
 % DELAY_TIME_FUN = @paul127_delay_time;
 % DELAY_TIME_FUN = @equation_one_delay;
 
-% юмюкхрхвеяйне пеьемхе
+% п░п²п░п⌡п≤п╒п≤п╖п∙п║п п·п∙ п═п∙п╗п∙п²п≤п∙
 % ANALYTICAL_SOLUTION = @log;
 % ANALYTICAL_SOLUTION = @equation_one_solution;
         
-time_start = 0;     % мювюкн хяякедселнцн хмрепбюкю
-time_end = 2;       % йнмеж хяякедселнцн хмрепбюкю
-steps_k = 8;        % лмнфхрекэ дкъ ьюцнб
+time_start = 0;     % п²п░п╖п░п⌡п· п≤п║п║п⌡п∙п■пёп∙п°п·п⌠п· п≤п²п╒п∙п═п▓п░п⌡п░
+time_end = 2;       % п п·п²п∙п╕ п≤п║п║п⌡п∙п■пёп∙п°п·п⌠п· п≤п²п╒п∙п═п▓п░п⌡п░
+steps_k = 8;        % п°п²п·п√п≤п╒п∙п⌡п╛ п■п⌡п╞ п╗п░п⌠п·п▓
 
 [ T_ARRAY, Y_ARRAY ] = dde_solver(a_matrix, b_vector, c_vector, order, stage_count, ...
     DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, time_start, time_end, steps_k);
