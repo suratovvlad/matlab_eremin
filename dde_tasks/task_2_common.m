@@ -1,4 +1,4 @@
-function task_1_common( DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, HISTORY_DERIV_FUN, time_start, time_end )
+function task_2_common( DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, HISTORY_DERIV_FUN, time_start, time_end )
 % DDE_FUN       -   дхттепемжхюкэмне спюбмемхе я гюоюгдшбючыхл юпцслемрнл
 % HISTORY_FUN   -   тсмйжхъ хярнпхх
 % DELAY_TIME_FUN    -   тсмйжхъ гюоюгдшбюмхъ
@@ -18,7 +18,7 @@ b_vector = @VECTOR_B_OF_CERK5_METHOD;
 c_vector = @VECTOR_C_OF_CERK5_METHOD;
 
 % хмрепонкъмр
-INTERPOLANT_FUN = @CERK5_interpolant;
+INTERPOLANT_FUN = @Hermite_interpolant;
 
 steps = [];
 errors = [];

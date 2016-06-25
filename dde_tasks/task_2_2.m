@@ -16,5 +16,5 @@ time_start = 0;
 % йнмеж хяякедселнцн хмрепбюкю
 time_end = 2;
 
-task_1_common(DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, HISTORY_DERIV_FUN, time_start, time_end);
+task_2_common(DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, HISTORY_DERIV_FUN, time_start, time_end);
 

@@ -1,4 +1,4 @@
-function result = delaying_func( theta, current_step_index, STEP, stage_count, K_MATRIX, Y_ARRAY, B_VECTOR_FUN )
+function result = get_new_y_value( theta, current_step_index, STEP, stage_count, K_MATRIX, Y_ARRAY, B_VECTOR_FUN )
     % theta                 - оюпюлерп бпелемх, б йнрнпнл бшвхякъел
     %                         хмрепонкхпнбюммне гмювемхе тсмйжхх
     % current_step_index 	- хмдейя рейсыецн ьюцю                
@@ -28,5 +28,6 @@ function result = delaying_func( theta, current_step_index, STEP, stage_count, K
         
     % бшвхякъел пегскэрюр
     result = y_value + STEP * sum_for_step;    
+
 end
 
