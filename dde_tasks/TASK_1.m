@@ -3,11 +3,11 @@ function [ DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, HISTORY_DE
     % дхттепемжхюкэмне спюбмемхе я гюоюгдшбючыхл юпцслемрнл
     DDE_FUN = @paul127_function;
     % тсмйжхъ хярнпхх
-    HISTORY_FUN = @history_func;
+    HISTORY_FUN = @paul127_history;
     % тсмйжхъ гюоюгдшбюмхъ
     DELAY_TIME_FUN = @paul127_delay_time;
     % юмюкхрхвеяйне пеьемхе
-    ANALYTICAL_SOLUTION = @log;
+    ANALYTICAL_SOLUTION = @paul127_solution;
     % опнхгбндмюъ тсмйжхх хярнпхх
     HISTORY_DERIV_FUN = @paul127_histoty_deriv;
 
