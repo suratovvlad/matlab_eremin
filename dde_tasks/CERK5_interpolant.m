@@ -1,6 +1,6 @@
-function result = CERK5_interpolant( theta, current_step_index, STEP, stage_count, ...
+function result = CERK5_interpolant( delayed_t, current_step_index, STEP, stage_count, ...
     K_MATRIX, Y_ARRAY, DY_ARRAY, B_VECTOR_FUN, T_ARRAY )
-    % theta                 - оюпюлерп бпелемх, б йнрнпнл бшвхякъел
+    % delayed_t             - оюпюлерп бпелемх, б йнрнпнл бшвхякъел
     %                         хмрепонкхпнбюммне гмювемхе тсмйжхх
     % current_step_index 	- хмдейя рейсыецн ьюцю                
     % STEP                  - ьюц лерндю
