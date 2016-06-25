@@ -83,11 +83,11 @@ while time_current < time_end
     T_ARRAY(step_index) = time_current;
     
     % Ñ×ÈÒÀÅÌ ÃËÎÁÀËÜÍÓÞ ÏÎÃÐÅØÍÎÑÒÜ ÍÀ ÝÒÎÌ ØÀÃÅ ÊÀÊ ÌÀÊÑÈÌÀËÜÍÎÅ
-    % ÎÒÊËÎÍÅÍÈÅ, ÂÛ×ÈÑËÅÍÍÎÅ ÍÀ 100 ÐÀÂÍÎÎÑÒÎßÙÈÕ ÒÎ×ÅÊ ÂÍÓÒÐÈ ÝÒÎÃÎ ØÀÃÀ
+    % ÎÒÊËÎÍÅÍÈÅ, ÂÛ×ÈÑËÅÍÍÎÅ ÍÀ 1000 ÐÀÂÍÎÎÑÒÎßÙÈÕ ÒÎ×ÅÊ ÂÍÓÒÐÈ ÝÒÎÃÎ ØÀÃÀ
     time_left = T_ARRAY(step_index - 1);
     time_right = T_ARRAY(step_index);    
     
-    timer_step = (time_right - time_left) / 100;
+    timer_step = (time_right - time_left) / 1000;
     timer = time_left;
     while timer < time_right
         
@@ -108,15 +108,15 @@ while time_current < time_end
 end
 
 
-x = time_start:0.01:time_end;
-y = ANALYTICAL_SOLUTION(x);
-
-figure;
-plot(T_ARRAY, Y_ARRAY, x, y);
-
-title(['Graph of Numerical and Analitycal Solutions with step = '  num2str(STEP)]);
-xlabel('time') % x-axis label
-ylabel('function values') % y-axis label
-legend('y = Numerical','y = Analitycal','Location','southwest');
+% x = time_start:0.01:time_end;
+% y = ANALYTICAL_SOLUTION(x);
+% 
+% figure;
+% plot(T_ARRAY, Y_ARRAY, x, y);
+% 
+% title(['Graph of Numerical and Analitycal Solutions with step = '  num2str(STEP)]);
+% xlabel('time') % x-axis label
+% ylabel('function values') % y-axis label
+% legend('y = Numerical','y = Analitycal','Location','southwest');
 end
 
