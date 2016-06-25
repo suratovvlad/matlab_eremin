@@ -1,4 +1,4 @@
-function task_1_common( DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, HISTORY_DERIV_FUN, time_start, time_end )
+function task_A_common( DDE_FUN, HISTORY_FUN, DELAY_TIME_FUN, ANALYTICAL_SOLUTION, HISTORY_DERIV_FUN, time_start, time_end )
 % DDE_FUN       -   дхттепемжхюкэмне спюбмемхе я гюоюгдшбючыхл юпцслемрнл
 % HISTORY_FUN   -   тсмйжхъ хярнпхх
 % DELAY_TIME_FUN    -   тсмйжхъ гюоюгдшбюмхъ
