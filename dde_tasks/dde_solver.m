@@ -107,7 +107,7 @@ while time_current < time_end
     timer = time_left;
     while timer < time_right
         
-        numerical_answer = delaying_func(timer, step_index, STEP, stage_count, K_MATRIX, Y_ARRAY, b_vector);
+        numerical_answer = INTERPOLANT_FUN(timer, step_index, STEP, stage_count, K_MATRIX, Y_ARRAY, DY_ARRAY, b_vector, T_ARRAY);
         analitycal_answer = ANALYTICAL_SOLUTION(timer);
         
         error_for_step = abs(numerical_answer - analitycal_answer);
@@ -118,21 +118,28 @@ while time_current < time_end
         
         timer = timer + timer_step;
     end
+
+    
     
     % ÓÂÅËÈ×ÈÂÀÅÌ ÒÅÊÓÙÈÉ Ñ×ÅÒ×ÈÊ ØÀÃÀ
     step_index = step_index + 1;
 end
 
+% numerical_answer = Y_ARRAY(length(Y_ARRAY));
+% analitycal_answer = ANALYTICAL_SOLUTION(T_ARRAY(length(T_ARRAY)));
+% 
+% GLOBAL_ERROR = abs(numerical_answer - analitycal_answer);
 
-x = time_start:0.01:time_end;
-y = ANALYTICAL_SOLUTION(x);
 
-figure;
-plot(T_ARRAY, Y_ARRAY, x, y);
-
-title(['Graph of Numerical and Analitycal Solutions with step = '  num2str(STEP)]);
-xlabel('time') % x-axis label
-ylabel('function values') % y-axis label
-legend('y = Numerical','y = Analitycal','Location','southwest');
+% x = time_start:0.01:time_end;
+% y = ANALYTICAL_SOLUTION(x);
+% 
+% figure;
+% plot(T_ARRAY, Y_ARRAY, x, y);
+% 
+% title(['Graph of Numerical and Analitycal Solutions with step = '  num2str(STEP)]);
+% xlabel('time') % x-axis label
+% ylabel('function values') % y-axis label
+% legend('y = Numerical','y = Analitycal','Location','southwest');
 end
 
